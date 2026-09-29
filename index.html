@@ -5,18 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zamfara Ajo Manager - Premium</title>
 <meta name="theme-color" content="#0a7a00">
+<link rel="icon" href="logo.png">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#eef5ee}
-.header{background:#0a7a00;padding:16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;color:#fff}
-.header h1{font-size:22px;font-weight:900}
+.header{background:#0a7a00;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10;color:#fff}
+.logo-header{width:40px;height:40px;border-radius:10px;background:#fff;padding:4px;object-fit:contain}
 .badge-yellow{background:#FFCC00;color:#000;padding:4px 10px;border-radius:12px;font-size:10px;font-weight:900;margin-left:6px}
 .badge-white{background:#000;color:#fff;padding:6px 14px;border-radius:20px;font-size:12px}
 .container{max-width:500px;margin:0 auto;padding:12px}
 .card{background:#fff;border-radius:20px;padding:18px;box-shadow:0 4px 15px rgba(0,0,0,.07);margin-bottom:14px}
 .card-green{background:#0a7a00;color:#fff;display:flex;justify-content:space-between;padding:18px}
 input,textarea{width:100%;padding:14px;border:2px solid #e5e5e5;border-radius:14px;margin:7px 0;font-size:14px;outline:none}
-input:focus,textarea:focus{border-color:#0a7a00}
 textarea{min-height:70px}
 .file-box{border:2px solid #e5e5e5;border-radius:14px;padding:10px;margin:7px 0;display:flex;align-items:center;gap:10px}
 .file-box input{border:none;margin:0;padding:0}
@@ -28,159 +28,81 @@ textarea{min-height:70px}
 .hidden{display:none!important}
 .lock-screen{position:fixed;inset:0;background:#0a3d00;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px}
 .lock-box{background:#fff;padding:25px;border-radius:20px;width:100%;max-width:380px;text-align:center}
+.lock-logo{width:90px;height:90px;border-radius:20px;margin:0 auto 10px;display:block;box-shadow:0 4px 15px rgba(0,0,0,.2)}
 .customer{background:#fff;border-radius:16px;padding:12px;margin:10px 0;display:flex;gap:10px;border-left:5px solid #0a7a00;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .preview{width:60px;height:60px;border-radius:10px;object-fit:cover;border:2px solid #0a7a00;display:none}
 </style>
 </head>
 <body>
 
-<!-- LOCK SCREEN - LICENSE ACTIVATION -->
+<!-- LOCK SCREEN WITH LOGO -->
 <div id="lockScreen" class="lock-screen">
 <div class="lock-box">
-<div style="font-size:50px">💰</div>
+<img src="logo.png" class="lock-logo" alt="Logo" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+<div style="font-size:50px;display:none">💰</div>
 <h2 style="color:#0a7a00">ZAMFARA AJO MANAGER</h2>
-<p style="font-size:12px;color:#666;margin:8px 0">Premium Offline Daily Contribution Tracker<br>With Photo & Address Support</p>
+<p style="font-size:12px;color:#666;margin:8px 0">Premium Offline Contribution Tracker<br>With Photo & Address</p>
 <div id="lockAlert" class="hidden" style="padding:10px;border-radius:8px;margin:10px 0;font-weight:bold;font-size:13px"></div>
-<input id="licenseInput" placeholder="ENTER LICENSE CODE e.g AJO-2026-1001" style="text-transform:uppercase;text-align:center;font-weight:bold;border:2px solid #0a7a00">
+<input id="licenseInput" placeholder="ENTER LICENSE CODE e.g AJO-2026-1001" style="text-transform:uppercase;text-align:center;font-weight:bold;border:2px solid #0a7a00;width:100%;padding:14px;border-radius:14px;margin:7px 0">
 <button class="btn btn-green" onclick="activate()">UNLOCK APP 🔓</button>
 <p style="font-size:11px;margin-top:12px;color:#888">Price: N3,000 Only / Per License</p>
 <div style="margin-top:15px;border-top:2px dashed #eee;padding-top:12px">
 <a href="tel:09117675227" style="text-decoration:none"><div class="btn btn-green">📞 CALL: 09117675227</div></a>
-<a href="https://wa.me/2349117675227?text=Hello,%20I%20need%20Ajo%20App%20for%20N3000" style="text-decoration:none"><div class="btn" style="background:#25D366;color:#fff">💬 WHATSAPP ADMIN</div></a>
 </div>
 </div>
 </div>
 
-<div class="header"><h1>AJO MANAGER <span class="badge-yellow">ZAMFARA</span></h1><span id="countBadge" class="badge-white">0 Customers</span></div>
+<div class="header">
+<div style="display:flex;align-items:center;gap:10px">
+<img src="logo.png" class="logo-header" alt="Logo" onerror="this.style.display='none'">
+<h1>AJO MANAGER <span class="badge-yellow">ZAMFARA</span></h1>
+</div>
+<span id="countBadge" class="badge-white">0 Customers</span>
+</div>
 
 <div class="container">
-
-<div class="card card-green"><div><small>Total Contribution Collected</small><h2 id="totalCollected">₦0</h2></div><div style="text-align:right"><small>Total Customers</small><h2 id="totalCount">0</h2></div></div>
+<div class="card card-green"><div><small>Total Collected</small><h2 id="totalCollected">₦0</h2></div><div style="text-align:right"><small>Total Customers</small><h2 id="totalCount">0</h2></div></div>
 
 <div class="card">
 <h3 style="color:#0a7a00">➕ Add New Customer</h3>
-
 <input id="cName" placeholder="Customer Full Name *">
 <input id="cPhone" placeholder="Phone Number *">
-<input id="cAmount" type="number" placeholder="Daily Contribution Amount (e.g 500) *">
-<input id="cTarget" type="number" placeholder="Target Amount (e.g 15000) - Optional">
-<textarea id="cAddress" placeholder="Customer Address (Optional) - House, Street, Town..."></textarea>
-
+<input id="cAmount" type="number" placeholder="Daily Amount (e.g 500) *">
+<input id="cTarget" type="number" placeholder="Target Amount (e.g 15000)">
+<textarea id="cAddress" placeholder="Customer Address (Optional)"></textarea>
 <div class="file-box">
 <input type="file" id="cPhoto" accept="image/*" onchange="previewPhoto(event)">
 <img id="imgPreview" class="preview">
-<span id="fileLabel" style="font-size:12px;color:#888">No file chosen - Click to add photo</span>
+<span id="fileLabel" style="font-size:12px;color:#888">No file chosen</span>
 </div>
-
 <button class="btn btn-green" onclick="saveCustomer()">💾 SAVE CUSTOMER</button>
 <button class="btn btn-black" onclick="exportData()">📤 EXPORT TO CSV</button>
 <button class="btn btn-red" onclick="lockApp()">🔒 LOCK APP</button>
 </div>
 
 <div class="card" style="padding:12px;display:flex;gap:8px">
-<input id="search" placeholder="🔍 Search by name or phone..." oninput="showCustomers()" style="flex:1;margin:0">
+<input id="search" placeholder="🔍 Search by name or phone..." oninput="showCustomers()" style="flex:1;margin:0;padding:14px;border:2px solid #e5e5e5;border-radius:14px">
 <button class="btn btn-yellow" onclick="exportData()">📤 Excel</button>
 </div>
 
 <div id="list"></div>
 <div id="empty" style="text-align:center;color:#999;padding:40px 20px">No customers yet - Add your first customer!</div>
-
 </div>
 
 <script>
-// 21 License keys + 1 master key
 const VALID_KEYS=["AJO-2026-1001","AJO-2026-1002","AJO-2026-1003","AJO-2026-1004","AJO-2026-1005","AJO-2026-1006","AJO-2026-1007","AJO-2026-1008","AJO-2026-1009","AJO-2026-1010","AJO-2026-1011","AJO-2026-1012","AJO-2026-1013","AJO-2026-1014","AJO-2026-1015","AJO-2026-1016","AJO-2026-1017","AJO-2026-1018","AJO-2026-1019","AJO-2026-1020","AJO-ADMIN-2026"];
 let customers=JSON.parse(localStorage.getItem('zamfara_ajo_db')||'[]');
 let photoBase64="";
 let isUnlocked=localStorage.getItem('ajo_unlocked')==='yes';
 if(isUnlocked){document.getElementById('lockScreen').style.display='none';}
-
-function activate(){
- let c=document.getElementById('licenseInput').value.trim().toUpperCase();
- let a=document.getElementById('lockAlert');
- if(!VALID_KEYS.includes(c)){
-   a.innerText='❌ Invalid Code - Please Call 09117675227';
-   a.style.background='#f8d7da';a.style.color='#721c24';
-   a.classList.remove('hidden');return;
- }
- localStorage.setItem('ajo_unlocked','yes');
- a.innerText='✅ Valid Code! Unlocking app...';
- a.style.background='#d4edda';a.style.color='#155724';
- a.classList.remove('hidden');
- setTimeout(()=>{document.getElementById('lockScreen').style.display='none';showCustomers();},700);
-}
+function activate(){let c=document.getElementById('licenseInput').value.trim().toUpperCase();let a=document.getElementById('lockAlert');if(!VALID_KEYS.includes(c)){a.innerText='❌ Invalid Code - Call 09117675227';a.style.background='#f8d7da';a.style.color='#721c24';a.classList.remove('hidden');return;}localStorage.setItem('ajo_unlocked','yes');a.innerText='✅ Valid Code! Unlocking...';a.style.background='#d4edda';a.style.color='#155724';a.classList.remove('hidden');setTimeout(()=>{document.getElementById('lockScreen').style.display='none';showCustomers();},700);}
 function lockApp(){localStorage.removeItem('ajo_unlocked');location.reload();}
-
-function previewPhoto(e){
- let file=e.target.files[0]; if(!file) return;
- document.getElementById('fileLabel').innerText=file.name;
- let r=new FileReader();
- r.onload=function(ev){
-   photoBase64=ev.target.result;
-   let img=document.getElementById('imgPreview');
-   img.src=photoBase64; img.style.display='block';
- };
- r.readAsDataURL(file);
-}
-
-function saveCustomer(){
- let n=document.getElementById('cName').value.trim();
- let p=document.getElementById('cPhone').value.trim();
- let amt=parseInt(document.getElementById('cAmount').value)||0;
- let tar=parseInt(document.getElementById('cTarget').value)||0;
- let addr=document.getElementById('cAddress').value.trim();
- if(!n||!p||!amt){alert('Please enter Name, Phone and Daily Amount!');return;}
- let obj={id:Date.now(),name:n,phone:p,daily:amt,target:tar,address:addr,photo:photoBase64,paid:0,history:[]};
- customers.unshift(obj);
- localStorage.setItem('zamfara_ajo_db',JSON.stringify(customers));
- ['cName','cPhone','cAmount','cTarget','cAddress'].forEach(id=>document.getElementById(id).value='');
- document.getElementById('cPhoto').value=''; photoBase64='';
- document.getElementById('imgPreview').style.display='none';
- document.getElementById('fileLabel').innerText='No file chosen - Click to add photo';
- showCustomers();
-}
-
-function showCustomers(){
- let q=document.getElementById('search').value.toLowerCase();
- let l=document.getElementById('list'); l.innerHTML='';
- let f=customers.filter(c=>c.name.toLowerCase().includes(q)||c.phone.includes(q));
- document.getElementById('empty').style.display=customers.length==0?'block':'none';
- let total=0; customers.forEach(c=>total+=c.paid);
- document.getElementById('totalCollected').innerText='₦'+total.toLocaleString();
- document.getElementById('totalCount').innerText=customers.length;
- document.getElementById('countBadge').innerText=customers.length+' Customers';
- f.forEach(c=>{
-   let i=customers.findIndex(x=>x.id==c.id);
-   let bal=c.target?c.target-c.paid:0;
-   let div=document.createElement('div'); div.className='customer';
-   div.innerHTML=`${c.photo?`<img src="${c.photo}" style="width:50px;height:50px;border-radius:50%;object-fit:cover">`:`<div style="width:50px;height:50px;border-radius:50%;background:#0a7a00;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold">${c.name.charAt(0).toUpperCase()}</div>`}
-   <div style="flex:1"><b>${c.name}</b><br><small>${c.phone} - ₦${c.daily}/day</small><br><small style="color:#555">📍 ${c.address||'No address'}</small><br><small style="color:${bal<=0?'green':'red'}">${c.target?'Target: ₦'+c.target.toLocaleString()+' | Paid: ₦'+c.paid.toLocaleString()+' | Balance: ₦'+bal.toLocaleString(): 'Total Paid: ₦'+c.paid.toLocaleString()}</small><br><button onclick="addPayment(${i})" style="background:#0a7a00;color:#fff;border:none;padding:5px 10px;border-radius:5px;font-size:11px;margin-top:4px">+ Add Payment</button><button onclick="delCust(${i})" style="background:#ff3b30;color:#fff;border:none;padding:5px 10px;border-radius:5px;font-size:11px;margin-left:5px">Delete</button></div><div style="text-align:right"><h3 style="color:#0a7a00">₦${c.paid.toLocaleString()}</h3></div>`;
-   l.appendChild(div);
- });
-}
-function addPayment(i){
- let amt=prompt('How much was paid today?','500');
- if(!amt)return;amt=parseInt(amt);if(isNaN(amt))return;
- customers[i].paid+=amt;
- customers[i].history.push({date:new Date().toLocaleDateString(),amount:amt});
- localStorage.setItem('zamfara_ajo_db',JSON.stringify(customers));
- showCustomers();
-}
-function delCust(i){
- if(confirm('Are you sure you want to delete this customer?')){
-   customers.splice(i,1);
-   localStorage.setItem('zamfara_ajo_db',JSON.stringify(customers));
-   showCustomers();
- }
-}
-function exportData(){
- if(!customers.length){alert('No data to export');return;}
- let csv="Name,Phone,Daily Amount,Target Amount,Address,Total Paid,Balance,Date\n"+customers.map(c=>`"${c.name}","${c.phone}",${c.daily},${c.target},"${c.address}",${c.paid},${(c.target||0)-c.paid},"${new Date().toLocaleDateString()}"`).join("\n");
- let b=new Blob([csv],{type:'text/csv'});
- let u=URL.createObjectURL(b);
- let a=document.createElement('a');
- a.href=u;a.download='Ajo_Records_Zamfara.csv';a.click();
-}
+function previewPhoto(e){let file=e.target.files[0];if(!file)return;document.getElementById('fileLabel').innerText=file.name;let r=new FileReader();r.onload=function(ev){photoBase64=ev.target.result;let img=document.getElementById('imgPreview');img.src=photoBase64;img.style.display='block';};r.readAsDataURL(file);}
+function saveCustomer(){let n=document.getElementById('cName').value.trim();let p=document.getElementById('cPhone').value.trim();let amt=parseInt(document.getElementById('cAmount').value)||0;let tar=parseInt(document.getElementById('cTarget').value)||0;let addr=document.getElementById('cAddress').value.trim();if(!n||!p||!amt){alert('Please enter Name, Phone and Daily Amount!');return;}let obj={id:Date.now(),name:n,phone:p,daily:amt,target:tar,address:addr,photo:photoBase64,paid:0,history:[]};customers.unshift(obj);localStorage.setItem('zamfara_ajo_db',JSON.stringify(customers));['cName','cPhone','cAmount','cTarget','cAddress'].forEach(id=>document.getElementById(id).value='');document.getElementById('cPhoto').value='';photoBase64='';document.getElementById('imgPreview').style.display='none';document.getElementById('fileLabel').innerText='No file chosen';showCustomers();}
+function showCustomers(){let q=document.getElementById('search').value.toLowerCase();let l=document.getElementById('list');l.innerHTML='';let f=customers.filter(c=>c.name.toLowerCase().includes(q)||c.phone.includes(q));document.getElementById('empty').style.display=customers.length==0?'block':'none';let total=0;customers.forEach(c=>total+=c.paid);document.getElementById('totalCollected').innerText='₦'+total.toLocaleString();document.getElementById('totalCount').innerText=customers.length;document.getElementById('countBadge').innerText=customers.length+' Customers';f.forEach(c=>{let i=customers.findIndex(x=>x.id==c.id);let bal=c.target?c.target-c.paid:0;let div=document.createElement('div');div.className='customer';div.innerHTML=`${c.photo?`<img src="${c.photo}" style="width:50px;height:50px;border-radius:50%;object-fit:cover">`:`<div style="width:50px;height:50px;border-radius:50%;background:#0a7a00;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:bold">${c.name.charAt(0).toUpperCase()}</div>`}<div style="flex:1"><b>${c.name}</b><br><small>${c.phone} - ₦${c.daily}/day</small><br><small style="color:#555">📍 ${c.address||'No address'}</small><br><small style="color:${bal<=0?'green':'red'}">${c.target?'Target: ₦'+c.target.toLocaleString()+' | Paid: ₦'+c.paid.toLocaleString()+' | Bal: ₦'+bal.toLocaleString(): 'Paid: ₦'+c.paid.toLocaleString()}</small><br><button onclick="addPayment(${i})" style="background:#0a7a00;color:#fff;border:none;padding:5px 10px;border-radius:5px;font-size:11px;margin-top:4px">+ Add Payment</button><button onclick="delCust(${i})" style="background:#ff3b30;color:#fff;border:none;padding:5px 10px;border-radius:5px;font-size:11px;margin-left:5px">Delete</button></div><div style="text-align:right"><h3 style="color:#0a7a00">₦${c.paid.toLocaleString()}</h3></div>`;l.appendChild(div);});}
+function addPayment(i){let amt=prompt('How much was paid today?','500');if(!amt)return;amt=parseInt(amt);if(isNaN(amt))return;customers[i].paid+=amt;customers[i].history.push({date:new Date().toLocaleDateString(),amount:amt});localStorage.setItem('zamfara_ajo_db',JSON.stringify(customers));showCustomers();}
+function delCust(i){if(confirm('Are you sure you want to delete this customer?')){customers.splice(i,1);localStorage.setItem('zamfara_ajo_db',JSON.stringify(customers));showCustomers();}}
+function exportData(){if(!customers.length){alert('No data to export');return;}let csv="Name,Phone,Daily,Target,Address,Paid,Balance,Date\n"+customers.map(c=>`"${c.name}","${c.phone}",${c.daily},${c.target},"${c.address}",${c.paid},${(c.target||0)-c.paid},"${new Date().toLocaleDateString()}"`).join("\n");let b=new Blob([csv],{type:'text/csv'});let u=URL.createObjectURL(b);let a=document.createElement('a');a.href=u;a.download='Ajo_Records_Zamfara.csv';a.click();}
 showCustomers();
 </script>
 </body>
